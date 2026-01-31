@@ -1,7 +1,5 @@
 # ARQUIVO RESPONSÁVEL POR CONTER TODOS OS TEXTOS DO PROGRAMA
 
-# OBS: falta adicionar a mensagem para a seção C e D
-
 import constantes as cts
 
 mensagemBoasVindas = f"""Seja bem vindo ao simulador eletromagnetico baseado no metodo das diferencas finitas no dominio do tempo (FDTD).
@@ -39,5 +37,15 @@ mensagemB = """\nAbaixo tem-se as opcoes disponiveis:
         [1] Grafico de Ressonancia
         [2] Simulacao 2D
     [C] Antena de Guia de Onda com Fendas
+    [D] Aplicacao Atual da Antena de Guia com Fendas
+"""
+
+mensagemC = """\nAbaixo tem-se as opcoes disponiveis:
+
+    [A] Guia de Onda Retangular Comercial
+    [B] Cavidade Ressonante Metalica
+    [C] Antena de Guia de Onda com Fendas
+        [1] Grafico de Irradiacao da Antena
+        [2] Simulacao 2D
     [D] Aplicacao Atual da Antena de Guia com Fendas
 """
