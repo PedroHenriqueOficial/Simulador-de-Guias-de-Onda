@@ -24,9 +24,9 @@ def inicializarCampos():
 """
 
     • Atualiza o campo magnético baseado no rotacional do campo elétrico.
-    • Equações discretizadas no tempo e espaço
-    • Update de H_x aqui representado pela dimensão z do gráfico
-    • Update de H_y aqui representado pela dimensão x do gráfico
+    • Equações discretizadas no tempo e espaço.
+    • Update de H_x aqui representado pela dimensão z do gráfico.
+    • Update de H_y aqui representado pela dimensão x do gráfico.
 
 """
 
@@ -41,7 +41,7 @@ def atualizarCampoMagnetico(E_z, H_x, H_y):
 """
 
     • Atualiza o campo elétrico baseado no rotacional do campo magnético.
-    • Equações discretizadas no tempo e espaço
+    • Equações discretizadas no tempo e espaço.
 
 """
 
@@ -55,7 +55,7 @@ def atualizarCampoEletrico(E_z, H_x, H_y):
 
 """
 
-    • Calcula a largura temporal do pulso
+    • Calcula a largura temporal do pulso.
 
 """
 
@@ -69,9 +69,9 @@ def larguraTemporalPulsoA(tempo, frequencia):
 
 """
 
-    • Aplica a fonte no gráfico forçando o campo elétrico
-    • A fonte tem o perfil espacial do modo TE10
-    • Coloca a fonte na posição Z definida
+    • Aplica a fonte no gráfico forçando o campo elétrico.
+    • A fonte tem o perfil espacial do modo TE10.
+    • Coloca a fonte na posição Z definida.
 
 """
 
@@ -88,7 +88,7 @@ def fonte(E_z, tempo):
 
 """
 
-    • Gera um pulso curto (20 picosegundos)
+    • Gera um pulso curto (20 picosegundos).
     • Usado para excitar todas as frequências da cavidade e achar ressonâncias.
 
 """
@@ -103,9 +103,9 @@ def pulsoCurto(tempo):
 """
    
     • Aplica a fonte no campo.
-    • Fonte senoidal pura e contínua
+    • Fonte senoidal pura e contínua.
     • A aplicação 'se soma' para não zerar ondas refletidas.
-    • Excita vários modos, não só o TE10
+    • Excita vários modos, não só o TE10.
 
 """
 
@@ -117,8 +117,8 @@ def larguraTemporalPulsoB(tempo, frequencia):
 
 """
 
-    • Fonte exclusiva para o gráfico de FFT
-    • Usa apenas o pulso curto
+    • Fonte exclusiva para o gráfico de FFT.
+    • Usa apenas o pulso curto.
 
 """
 
@@ -135,8 +135,8 @@ def fonteRessonancia(E_z, tempo):
 
 """
 
-    • Fonte para as animações 2D
-    • Verifica em qual seção estamos - A ou B - e escolhe o pulso correto
+    • Fonte para as animações 2D.
+    • Verifica em qual seção estamos - A ou B - e escolhe o pulso correto.
 
 """
 
@@ -154,5 +154,85 @@ def fonte(E_z, tempo):
         valor_tempo = larguraTemporalPulsoB(tempo, cts.FREQUENCIA_OPERACAO)
 
     E_z[:, cts.POSICAO_FONTE_EIXO_Z] += valor_tempo * espaco
+    
+    return E_z
+
+"""_________________________________________________________________ SEÇÃO C _________________________________________________________________"""
+
+"""
+
+    • Inicializa os campos para o funcionamento da antena.
+    • Cria um grid maior para a visualização da antena.
+    • O eixo X agora possui o guia e o ar.
+
+"""
+
+def inicializarCamposAntena():
+   
+    E_z = np.zeros((cts.NUMERO_PONTOS_X_MUNDO_C, cts.NUMERO_PONTOS_Z))
+    H_x = np.zeros((cts.NUMERO_PONTOS_X_MUNDO_C, cts.NUMERO_PONTOS_Z)) 
+    H_y = np.zeros((cts.NUMERO_PONTOS_X_MUNDO_C, cts.NUMERO_PONTOS_Z))
+    
+    return E_z, H_x, H_y
+
+"""
+
+    • Função para colocar as condições de funcionamento da antena.
+    • Função para desenhar o metal do guia de onda com os furos.
+
+"""
+
+def aplicarCondicoesAntena(E_z):
+    
+    # PAREDE INFERIOR (METAL PERFEITO EM X = 0)
+    
+    E_z[0, :] = 0 
+    
+    # PAREDE SUPERIOR (COM FENDAS)
+
+    indice_parede = cts.INDICE_PAREDE_GUIA
+    
+    # VERIFICAMOS PONTO A PONTO E, SE FOR METAL, ZERA, SE FOR FENDA, MANTÉM O CAMPO
+    
+    for k in range(cts.NUMERO_PONTOS_Z):
+        
+        posicao_z = k * cts.DIMENSAO_Z
+        eh_fenda = False
+        
+        # VERIFICA SE ESTE PONTO Z ESTÁ DENTRO DE ALGUMA FENDA
+
+        for f in range(cts.NUMERO_FENDAS):
+            
+            z_centro = cts.POSICAO_PRIMEIRA_FENDA + f * cts.ESPACAMENTO_FENDAS
+            
+            # SE A DISTÂNCIA ATÉ O CENTRO DA FENDA FOR MENOR QUE A MEIA-LARGURA, ESTAMOS DENTRO DELA
+            
+            if abs(posicao_z - z_centro) < (cts.LARGURA_FENDA / 2):
+                
+                eh_fenda = True
+                break
+        
+        # SE NÃO FOR FENDA, É METAL, LOGO, ZERA O CAMPO
+
+        if not eh_fenda:
+            
+            E_z[indice_parede, k] = 0 
+            
+    return E_z
+
+"""
+
+    • Fonte específica para a antena.
+    • Injeta somente dentro do guia.
+
+"""
+
+def fonteAntena(E_z, tempo):
+    
+    perfil_senoide = np.zeros(cts.NUMERO_PONTOS_X_MUNDO_C)
+    indices_guia = np.arange(cts.INDICE_PAREDE_GUIA)
+    perfil_senoide[indices_guia] = np.sin(np.pi * indices_guia / cts.INDICE_PAREDE_GUIA)
+    valor_tempo = larguraTemporalPulsoA(tempo, cts.FREQUENCIA_OPERACAO)
+    E_z[:, cts.POSICAO_FONTE_EIXO_Z] += valor_tempo * perfil_senoide
     
     return E_z
