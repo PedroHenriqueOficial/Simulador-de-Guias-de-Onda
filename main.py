@@ -4,7 +4,7 @@ import constantes as cts
 import calculos as calc
 
 from menu import menu
-from graficos import graficoSenoide, graficoRessonancia
+from graficos import graficoSenoide, graficoRessonancia, graficoDiagramaIrradiacao
 from animacoes import animacao2D
 
 # EXIBIÇÃO DO MENU
@@ -42,5 +42,15 @@ match cts.LETRA:
             case 1:
                 graficoRessonancia()
         
+            case 2:
+                animacao2D()
+
+    case 'C':
+
+        match cts.NUMERO:
+
+            case 1:
+                graficoDiagramaIrradiacao()
+
             case 2:
                 animacao2D()
