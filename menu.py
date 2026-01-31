@@ -7,7 +7,7 @@ from os import system, name
 
 """
 
-    • Função responsável por limpar a tela do programa 
+    • Função responsável por limpar a tela do programa. 
 
 """
 
@@ -17,8 +17,8 @@ def limparTela():
 
 """
 
-    • Função responsável por criar o menu
-    • Dentro desta função define-se algumas constantes do arquivo chamado 'constantes.py'
+    • Função responsável por criar o menu.
+    • Dentro desta função define-se algumas constantes do arquivo chamado 'constantes.py'.
 
 """
 
@@ -86,6 +86,33 @@ def menu():
 
                 print(txt.mensagemErro)
                 print(txt.mensagemB)
+
+                numero = int(input("Informe o numero escolhido: "))
+
+            match numero:
+
+                case 1:
+                    cts.NUMERO = 1
+                case 2:
+                    cts.NUMERO = 2
+
+        case 'C':
+
+            cts.FREQUENCIA_OPERACAO = 90e9
+            cts.LETRA = 'C'
+
+            limparTela()
+
+            print(txt.mensagemC)
+
+            numero = int(input("Informe o numero escolhido: "))
+
+            while (numero != 1 and numero != 2):
+
+                limparTela()
+
+                print(txt.mensagemErro)
+                print(txt.mensagemC)
 
                 numero = int(input("Informe o numero escolhido: "))
 
