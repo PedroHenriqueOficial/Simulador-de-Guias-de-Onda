@@ -31,7 +31,7 @@ def menu():
     
     letra = input("Informe a letra escolhida: ").strip().upper()[:1]
 
-    while (letra != 'A' and letra != 'B' and letra != 'C' and letra != 'D'):
+    while (letra != 'A' and letra != 'B' and letra != 'C'):
 
         limparTela()
 
@@ -122,3 +122,4 @@ def menu():
                     cts.NUMERO = 1
                 case 2:
                     cts.NUMERO = 2
+
