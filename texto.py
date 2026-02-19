@@ -14,8 +14,7 @@ mensagemMenu = """\nAbaixo tem-se as opcoes disponiveis:
 
     [A] Guia de Onda Retangular Comercial
     [B] Cavidade Ressonante Metalica
-    [C] Antena de Guia de Onda com Fendas
-    [D] Aplicacao Atual da Antena de Guia com Fendas 
+    [C] Antena de Guia de Onda com Fendas 
 """
 
 mensagemErro = "\nA opcao informada nao exite!"
@@ -27,7 +26,6 @@ mensagemA = """\nAbaixo tem-se as opcoes disponiveis:
         [2] Simulacao 2D
     [B] Cavidade Ressonante Metalica
     [C] Antena de Guia de Onda com Fendas
-    [D] Aplicacao Atual da Antena de Guia com Fendas
 """
 
 mensagemB = """\nAbaixo tem-se as opcoes disponiveis:
@@ -37,7 +35,6 @@ mensagemB = """\nAbaixo tem-se as opcoes disponiveis:
         [1] Grafico de Ressonancia
         [2] Simulacao 2D
     [C] Antena de Guia de Onda com Fendas
-    [D] Aplicacao Atual da Antena de Guia com Fendas
 """
 
 mensagemC = """\nAbaixo tem-se as opcoes disponiveis:
@@ -47,5 +44,4 @@ mensagemC = """\nAbaixo tem-se as opcoes disponiveis:
     [C] Antena de Guia de Onda com Fendas
         [1] Grafico de Irradiacao da Antena
         [2] Simulacao 2D
-    [D] Aplicacao Atual da Antena de Guia com Fendas
 """
